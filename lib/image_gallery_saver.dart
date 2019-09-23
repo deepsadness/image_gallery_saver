@@ -30,10 +30,10 @@ class ImageGallerySaver {
     return result;
   }
   /// Save the PNG，JPG，JPEG image or video located at [file] to the local device media gallery.
-  static Future notifyScan(String file,String name) async {
+  static Future notifyScan(String file) async {
     assert(file != null);
     final result =
-    await _channel.invokeMethod('notifyScan', [file,name]);
+    await _channel.invokeMethod('notifyScan',file);
     return result;
   }
 

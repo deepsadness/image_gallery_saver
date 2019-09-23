@@ -15,7 +15,7 @@ import io.flutter.plugin.common.PluginRegistry.Registrar
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import android.os.Environment
+import android.media.MediaScannerConnection
 
 class ImageGallerySaverPlugin(private val registrar: Registrar) : MethodCallHandler {
 
@@ -41,9 +41,8 @@ class ImageGallerySaverPlugin(private val registrar: Registrar) : MethodCallHand
                 result.success(getApplicationPicDirectionary())
             }
             call.method == "notifyScan" -> {
-                val path = call.arguments[0] as String
-                val name = call.arguments[1] as String
-                notifyScan(path,name,result);
+                val path = call.arguments as String
+                notifyScan(path,result);
 //                result.success(notifyScan(path,name))
             }
             else -> result.notImplemented()
@@ -101,7 +100,7 @@ class ImageGallerySaverPlugin(private val registrar: Registrar) : MethodCallHand
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath;
     }
 
-    public fun notifyScan( filePath:String,name:String,result: Result) {
+    public fun notifyScan( filePath:String,result: Result) {
         /* //直接插入
          MediaStore.Images.Media.insertImage(
                  contentResolver,
@@ -123,7 +122,7 @@ class ImageGallerySaverPlugin(private val registrar: Registrar) : MethodCallHand
             //刷新成功的回调
             registrar.activity().runOnUiThread(object :Runnable{
                 override fun run() {
-                    result.success();
+                    result.success(path);
                 }
             });
         })
