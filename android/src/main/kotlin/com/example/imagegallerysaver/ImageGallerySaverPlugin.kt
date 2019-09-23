@@ -116,9 +116,15 @@ class ImageGallerySaverPlugin(private val registrar: Registrar) : MethodCallHand
 
         val context = registrar.activeContext().applicationContext
         //使用MediaScannerConnection的方式
+        var suf="";
+        if (filePath.endsWith("gif")) {
+            suf="image/gif";
+        }else{
+            suf="image/jpeg"
+        }
         MediaScannerConnection.scanFile(context
                 , arrayOf(filePath)
-                , arrayOf("image/jpeg","image/gif"), { path, uri ->
+                , arrayOf(suf), { path, uri ->
             //刷新成功的回调
             registrar.activity().runOnUiThread(object :Runnable{
                 override fun run() {
