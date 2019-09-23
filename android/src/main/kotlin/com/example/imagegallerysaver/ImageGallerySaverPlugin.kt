@@ -118,7 +118,7 @@ class ImageGallerySaverPlugin(private val registrar: Registrar) : MethodCallHand
         //使用MediaScannerConnection的方式
         MediaScannerConnection.scanFile(context
                 , arrayOf(filePath)
-                , arrayOf("image/jpeg"), { path, uri ->
+                , arrayOf("image/jpeg","image/gif"), { path, uri ->
             //刷新成功的回调
             registrar.activity().runOnUiThread(object :Runnable{
                 override fun run() {
