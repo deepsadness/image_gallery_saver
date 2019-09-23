@@ -121,7 +121,11 @@ class ImageGallerySaverPlugin(private val registrar: Registrar) : MethodCallHand
                 , arrayOf(filePath)
                 , arrayOf("image/jpeg"), { path, uri ->
             //刷新成功的回调
-            registrar.activity().runOnUiThread({r->result.success();});
+            registrar.activity().runOnUiThread(object :Runnable{
+                override fun run() {
+                    result.success();
+                }
+            });
         })
 
     }
